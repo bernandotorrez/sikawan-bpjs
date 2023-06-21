@@ -94,7 +94,7 @@
 							</div>
 							<div class="form-group">
 							<label for="txtjnsbpjs">Jenis BPJS</label>
-								<select class="form-control" id="txtjnsbpjs" name="txtjnsbpjs hitung" required="required">
+								<select class="form-control" id="txtjnsbpjs" name="txtjnsbpjs" required="required">
 									<option value="" selected>Pilih Jenis BPJS</option>
 									<option value="1">Hak rawat kelas 2 naik ke kelas 1</option>
 									<option value="2">Hak rawat kelas 1 naik ke kelas di atas 1</option>
