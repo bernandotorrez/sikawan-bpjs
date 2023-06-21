@@ -32,13 +32,13 @@ class Home extends CI_Controller {
 			$data_input = array(
 				'no_pasien'=> $this->input->post('txtnopasien'),
 				'jns_bpjs'=> $this->input->post('txtjnsbpjs'),
-				'trf_riil_diatas_satu'=> $this->input->post('value1'),
-				'trf_ina_cbg_satu'=> $this->input->post('value2'),
-				'trf_ina_cbg_dua'=> $this->input->post('tvalue3'),
-				'selisih_riil_ina'=> $this->input->post('tvalue4'),
-				'selisih_ina_satu_dua'=> $this->input->post('tvalue5'),
-				'selisih_ina_satu'=> $this->input->post('tvalue6'),
-				'peserta_bayar'=> $this->input->post('tvalue7'),
+				'trf_riil_diatas_satu'=> str_replace(',', '', $this->input->post('value1')),
+				'trf_ina_cbg_satu'=> str_replace(',', '', $this->input->post('value2')),
+				'trf_ina_cbg_dua'=> str_replace(',', '', $this->input->post('value3')),
+				'selisih_riil_ina'=> str_replace(',', '', $this->input->post('value4')),
+				'selisih_ina_satu_dua'=> str_replace(',', '', $this->input->post('value5')),
+				'selisih_ina_satu'=> str_replace(',', '', $this->input->post('value6')),
+				'peserta_bayar'=> str_replace(',', '', $this->input->post('value7')),
 			);
 			$this->model_home->input($data_input);
 			$this->session->set_flashdata('inputValidationT', "<strong>Save Successfully!</strong>");
