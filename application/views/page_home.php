@@ -37,8 +37,10 @@
 				</div>
 				<div id="navbar" class="navbar-collapse collapse">
 					<ul class="nav navbar-nav navbar-right">
+						<?php if($this->session->userdata('level') == 'Admin') { ?>
 						<li><a href="<?php echo site_url('home');?>">Home</a></li>
 						<li><a href="<?php echo site_url('master');?>">Data Master</a></li>
+						<?php } ?>
 						<li class="dropdown">
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Report <span class="caret"></span></a>
 					<ul class="dropdown-menu">
@@ -46,7 +48,6 @@
 						<li><a href="<?php echo site_url('home/excel');?>" target="_blank">Excel</a></li>
 						<li><a href="<?php echo site_url('home/pdf');?>" target="_blank">PDF</a></li>
 						<li role="separator" class="divider"></li>
-						<li><a href="http://toriatec.com/" target="_blank">www.toriatec.com</a></li>
 					</ul>
 					</li>
 					</ul>
@@ -93,9 +94,9 @@
 								<input type="text" class="form-control" id="txtnopasien" name="txtnopasien" placeholder="Nomor Pasien" required="required">
 							</div>
 							<div class="form-group">
-							<label for="txtjnsbpjs">Jenis BPJS</label>
+							<label for="txtjnsbpjs">Jenis Hak Kelas Rawat Peserta JKN</label>
 								<select class="form-control" id="txtjnsbpjs" name="txtjnsbpjs" required="required">
-									<option value="" selected>Pilih Jenis BPJS</option>
+									<option value="" selected>Pilih Jenis Hak Kelas Rawat Peserta JKN</option>
 									<option value="1">Hak rawat kelas 2 naik ke kelas 1</option>
 									<option value="2">Hak rawat kelas 1 naik ke kelas di atas 1</option>
 									<option value="3">Hak rawat kelas 2 naik ke kelas di atas 1</option>
@@ -177,7 +178,7 @@
 	          <tr>
 	              <td class="text-center"><b>No</b></td>
 	              <td class="text-center"><b>Nomor Pasien</b></td>
-				  <td class="text-center"><b>Jenis BPJS</b></td>
+				  <td class="text-center"><b>Jenis Hak Kelas Rawat Peserta JKN</b></td>
 	              <td class="text-center"><b>Tarif Riil RS Diatas Kelas 1</b></td>
 	              <td class="text-center"><b>Tarif INA_CBG Kelas 1</b></td>
 	              <td class="text-center"><b>Tarif INA_CBG Kelas 2</b></td>
@@ -387,17 +388,21 @@
 					// Max 75% INA-CBG Kelas 1
 					var value6 = numberWithCommasValue(0.75 * value2);
 					$('#value6').val(value6);
-
-					// Peserta Bayar
-					$('#value7').val(0);
-
-					if ((value6.replaceAll(',', '') + value5.replaceAll(',', '')) < value4.replaceAll(',', ''))
-					{
-						var value7 = numberWithCommasValue(value6 + value5)
-						$('#value7').val(value7);
+					
+					if (value3.replaceAll(',', '') > value1.replaceAll(',', '')){
+						$('#value7').val(0);
 					} else {
-						$('#value7').val(value4);
+						console.log(value6.replaceAll(',', ''), value5.replaceAll(',', ''), value4.replaceAll(',', ''))
+						console.log(value6.replaceAll(',', '') + value5.replaceAll(',', ''))
+						if ((value6.replaceAll(',', '') + value5.replaceAll(',', '')) < value4.replaceAll(',', ''))
+						{
+							var value7 = numberWithCommasValue(value6 + value5)
+							$('#value7').val(value7);
+						} else {
+							$('#value7').val(value4);
+						}
 					}
+					
 					
 				}
 				

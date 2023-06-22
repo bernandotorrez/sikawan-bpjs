@@ -1,6 +1,13 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Style\NumberFormat;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+use PhpOffice\PhpSpreadsheet\IOFactory;
+use Mpdf\Mpdf;
+use PhpOffice\PhpSpreadsheet\Style\Border;
+
 class Home extends CI_Controller {
 
 	function __construct(){
@@ -93,17 +100,115 @@ class Home extends CI_Controller {
 		}
 	}
 
-	function excel(){
-			header("Content-type=appalication/vnd.ms-excel");
-			header("content-disposition:attachment;filename=laporandata.xls");
-			$data['record'] = $this->model_home->display_data();
-			$this->load->view('page_excel',$data);
+	function excel() {
+		$data = $this->model_home->get_data_pdf();
+		$file = 'laporan.xlsx';
+
+		$spreadsheet = new Spreadsheet();
+
+		// Set document properties
+		$spreadsheet->getProperties()->setCreator('Bernand')
+		->setLastModifiedBy('Bernand')
+		->setTitle('Laporan')
+		->setSubject('Laporan')
+		->setDescription('Laporan')
+		->setKeywords('Laporan')
+		->setCategory('Laporan');
+
+		$sheet = $spreadsheet->getActiveSheet();
+
+		// Header
+		$sheet->setCellValue('A1', 'No');
+		$sheet->setCellValue('B1', 'Nomor Pasien');
+		$sheet->setCellValue('C1', 'Jenis Hak Kelas Rawat Peserta JKN');
+		$sheet->setCellValue('D1', 'Tarif Riil RS Diatas Kelas 1');
+		$sheet->setCellValue('E1', 'Tarif INA_CBG Kelas 1');
+		$sheet->setCellValue('F1', 'Tarif INA_CBG Kelas 2');
+		$sheet->setCellValue('G1', 'Selisih Tarif Riil RS dgn Tarif INA_CBG');
+		$sheet->setCellValue('H1', 'Selisih INA_CBG Kelas 1-2');
+		$sheet->setCellValue('I1', 'Max 75% INA_CBG Kelas 1');
+		$sheet->setCellValue('J1', 'Peserta Bayar');
+
+		$noCell = 2;
+
+		// Isi
+		foreach($data->result() as $key => $value) {
+			if ($value->jns_bpjs == 1)
+			{
+				$jenis_bpjs = "Hak rawat kelas 2 naik ke kelas 1";
+			}
+			elseif ($value->jns_bpjs == 1)
+			{
+				$jenis_bpjs = "Hak rawat kelas 1 naik ke kelas di atas 1";
+			}
+			else
+			{
+				$jenis_bpjs = "Hak rawat kelas 2 naik ke kelas di atas 1";
+			}
+
+			$sheet->setCellValue('A'.$noCell, $key+1);
+			$sheet->setCellValue('B'.$noCell, $value->no_pasien);
+			$sheet->setCellValue('C'.$noCell, $jenis_bpjs);
+			$sheet->setCellValue('D'.$noCell, number_format($value->trf_riil_diatas_satu));
+			$sheet->setCellValue('E'.$noCell, number_format($value->trf_ina_cbg_satu));
+			$sheet->setCellValue('F'.$noCell, number_format($value->trf_ina_cbg_dua));
+			$sheet->setCellValue('G'.$noCell, number_format($value->selisih_riil_ina));
+			$sheet->setCellValue('H'.$noCell, number_format($value->selisih_ina_satu_dua));
+			$sheet->setCellValue('I'.$noCell, number_format($value->selisih_ina_satu));
+			$sheet->setCellValue('J'.$noCell, number_format($value->peserta_bayar));
+
+			$noCell++;
+		}
+
+		foreach(range('A','J') as $columnID) {
+			// Set Auto Size
+			$spreadsheet->getActiveSheet()->getColumnDimension($columnID)
+				->setAutoSize(true);
+		}
+
+		// Set Semua isi Column A, B ke Center
+		$sheet->getStyle('A:B')->getAlignment()->setHorizontal('center');
+
+		// Set tengah di header
+		$sheet->getStyle('A1:J1')->getAlignment()->setHorizontal('center');
+
+		// Set tengah isi yang mengangung angka
+		$sheet->getStyle('D:J')->getAlignment()->setHorizontal('right');
+
+		// Set Bold di header
+		$sheet->getStyle('A1:J1')->getFont()->setBold(true);
+
+		// Set tengah isi yang mengangung angka
+		$sheet->getStyle('D:J')->getNumberFormat()->setFormatCode(NumberFormat::FORMAT_NUMBER_COMMA_SEPARATED1);
+
+		// Set Border
+		$spreadsheet->getActiveSheet()
+		->getStyle('A1:J'.($noCell-1))
+		->getBorders()
+		->getAllBorders()
+		->setBorderStyle(Border::BORDER_THIN);
+
+		$writer = new Xlsx($spreadsheet);
+		
+		header('Content-disposition: attachment; filename='.$file);
+		header('Content-type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+		header('Content-Length: ' . filesize($file));
+		header('Content-Transfer-Encoding: binary');
+		header('Pragma: public');
+		$writer = IOFactory::createWriter($spreadsheet, 'Xlsx');
+		$writer->save('php://output');
 	}
+	// function excel(){
+	// 		header("Content-type=appalication/vnd.ms-excel");
+	// 		header("content-disposition:attachment;filename=laporandata.xls");
+	// 		$data['record'] = $this->model_home->get_data_pdf();
+	// 		$this->load->view('page_excel',$data);
+	// }
 
 	function pdf() {
 		$data = $this->model_home->get_data_pdf();
 
-		$mpdf = new \Mpdf\Mpdf();
+		$mpdf = new Mpdf();
 		$table = '';
 		foreach ($data->result() as $r => $value) {
 			if ($value->jns_bpjs == 1)
@@ -122,7 +227,7 @@ class Home extends CI_Controller {
 			<tr>
 				<td style="text-align: center;">'.($r+1).'</td>
 				<td style="text-align: center;">'.$value->no_pasien.'</td>
-				<td style="text-align: center;">'.$jenis_bpjs.'</td>
+				<td style="text-align: left;">'.$jenis_bpjs.'</td>
 				<td style="text-align: right;">'.number_format($value->trf_riil_diatas_satu).'</td>
 				<td style="text-align: right;">'.number_format($value->trf_ina_cbg_satu).'</td>
 				<td style="text-align: right;">'.number_format($value->trf_ina_cbg_dua).'</td>
@@ -140,7 +245,7 @@ class Home extends CI_Controller {
 					<tr style="text-align: center;">
 						<th>No</th>
 						<th>Nomor Pasien</th>
-						<th>Jenis BPJS</th>
+						<th>Jenis Hak Kelas Rawat Peserta JKN</th>
 						<th>Tarif Riil RS Diatas Kelas 1</th>
 						<th>Tarif INA_CBG Kelas 1</th>
 						<th>Tarif INA_CBG Kelas 2</th>
