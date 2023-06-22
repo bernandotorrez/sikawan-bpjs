@@ -200,7 +200,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 								<?php
 								if ($r->jns_bpjs == 1) {
 									echo "Hak rawat kelas 2 naik ke kelas 1";
-								} elseif ($r->jns_bpjs == 1) {
+								} elseif ($r->jns_bpjs == 2) {
 									echo "Hak rawat kelas 1 naik ke kelas di atas 1";
 								} else {
 									echo "Hak rawat kelas 2 naik ke kelas di atas 1";
