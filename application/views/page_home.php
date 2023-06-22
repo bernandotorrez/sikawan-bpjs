@@ -15,6 +15,7 @@
 		<link rel="shortcut icon" type="image/ico" href="<?php echo base_url('assets/img/bpjs.png')?>">
 		<link href="<?php echo base_url('assets/css/bootstrap.min.css')?>" rel="stylesheet">
 		<link href="<?php echo base_url('assets/css/navbar-fixed-top.css')?>" rel="stylesheet">
+		<link href="<?php echo base_url('assets/datatables.css')?>" rel="stylesheet">
 	</head>
 	<body>
 
@@ -173,7 +174,7 @@
 			}?>
 
 			<div class="row">
-				<table class="table table-hover">
+				<table class="table table-striped table-bordered table-hover" id="datatable">
 	        <thead>
 	          <tr>
 	              <td class="text-center"><b>No</b></td>
@@ -301,7 +302,19 @@
 
 		<script src="<?php echo base_url('assets/js/jquery.min.js')?>"></script>
 		<script src="<?php echo base_url('assets/js/bootstrap.min.js')?>"></script>
+		<script src="<?php echo base_url('assets/datatables.js')?>"></script>
 		<script>
+			$(document).ready(function () {
+				$('#datatable').DataTable({
+					responsive: true,
+					columnDefs: [ {
+						'targets': [0,10],
+						'orderable': false,
+					}],
+					order: [[1, 'desc']],
+				});
+			});
+
 			function numberWithCommas(element) {
 				var value = (element.value).replaceAll(',', '');
 				var newValue = value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
