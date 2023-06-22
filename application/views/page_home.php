@@ -336,7 +336,7 @@
 				var value2 = $('#value2').val().replaceAll(',', '');
 				var value3 = $('#value3').val().replaceAll(',', '');
 
-				if(txtjnsbpjs == 1) {
+				if(txtjnsbpjs == '1') {
 					$('#value3').prop("disabled", false);
 
 					// Selisih Tarif Riil RS dgn Tarif INACBG
@@ -354,7 +354,7 @@
 					// Peserta Bayar
 					var value7 = numberWithCommasValue(value2 - value3);
 					$('#value7').val(value7);
-				} else if(txtjnsbpjs == 2) {
+				} else if(txtjnsbpjs == '2') {
 					$('#value3').val(0).prop("disabled", true);
 
 					// Selisih Tarif Riil RS dgn Tarif INACBG
@@ -367,15 +367,19 @@
 					// Max 75% INA-CBG Kelas 1
 					var value6 = numberWithCommasValue(0.75 * value2)
 					$('#value6').val(value6);
-
+					
 					// Peserta Bayar
-					if (value4.replaceAll(',', '') > value6.replaceAll(',', '')){
-						$('#value7').val(value6);
+					if (parseInt(value2.replaceAll(',', '')) > parseInt(value1.replaceAll(',', ''))){
+						$('#value7').val(0);
 					} else {
-						$('#value7').val(value4);
+						if(parseInt(value4.replaceAll(',', '')) > parseInt(value6.replaceAll(',', ''))) {
+							$('#value7').val(numberWithCommasValue(value6));
+						} else {
+							$('#value7').val(numberWithCommasValue(value4));
+						}
 					}
 				} else {
-					$('#value3').val(0).prop("disabled", true);
+					$('#value3').prop("disabled", false);
 
 					// Selisih Tarif Riil RS dgn Tarif INACBG
 					var value4 = numberWithCommasValue(value1 - value3);
@@ -389,14 +393,12 @@
 					var value6 = numberWithCommasValue(0.75 * value2);
 					$('#value6').val(value6);
 					
-					if (value3.replaceAll(',', '') > value1.replaceAll(',', '')){
+					if (parseInt(value3.replaceAll(',', '')) > parseInt(value1.replaceAll(',', ''))){
 						$('#value7').val(0);
 					} else {
-						console.log(value6.replaceAll(',', ''), value5.replaceAll(',', ''), value4.replaceAll(',', ''))
-						console.log(value6.replaceAll(',', '') + value5.replaceAll(',', ''))
-						if ((value6.replaceAll(',', '') + value5.replaceAll(',', '')) < value4.replaceAll(',', ''))
+						if ((parseInt(value6.replaceAll(',', '')) + parseInt(value5.replaceAll(',', ''))) < parseInt(value4.replaceAll(',', '')))
 						{
-							var value7 = numberWithCommasValue(value6 + value5)
+							var value7 = numberWithCommasValue(parseInt(value6.replaceAll(',', '')) + parseInt(value5.replaceAll(',', '')))
 							$('#value7').val(value7);
 						} else {
 							$('#value7').val(value4);
