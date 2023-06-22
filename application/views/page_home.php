@@ -194,7 +194,7 @@
 	        </thead>
 	        <tbody>
 						<?php
-		          $no=1+$this->uri->segment(3);
+		          $no=1;
 	            foreach ($record->result() as $r){
 		        ?>
 				        <tr>
@@ -296,7 +296,7 @@
 		        ?>
 					</tbody>
 	      </table>
-				<?php echo $paging; ?>
+			
 			</div>
 		</div>
 
@@ -311,7 +311,7 @@
 						'targets': [0,10],
 						'orderable': false,
 					}],
-					order: [[1, 'desc']],
+					order: [[1, 'asc']],
 				});
 			});
 

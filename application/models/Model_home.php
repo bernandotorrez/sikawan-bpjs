@@ -7,7 +7,8 @@ class Model_home extends CI_Model{
   }
 
   function display_data(){
-		return $this->db->get('bpjs');
+		$this->db->order_by('no_pasien', 'asc');
+    return $this->db->get('bpjs');
 	}
 
   function get_data_pdf()

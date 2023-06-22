@@ -17,19 +17,10 @@ class Home extends CI_Controller {
 	}
 
 	function index(){
-		$this->load->library('pagination');
-		$config['base_url'] = site_url().'home/index/';
-		$config['total_rows']= $this->model_home->display_data()->num_rows();
-		$config['per_page'] = 10;
-		$this->pagination->initialize($config);
-		$data_paging = $this->pagination->create_links();
-		$halaman = $this->uri->segment(3);
-		$halaman = $halaman==''?0:$halaman;
 		$data = array(
-				'title' => 'Home',
-				'paging' => $data_paging,
-				'record' => $this->model_home->display_data_paging($halaman,$config['per_page']),
-			);
+			'title' => 'Home',
+			'record' => $this->model_home->display_data(),
+		);
 		$this->load->view('page_home', $data);
 	}
 
@@ -101,7 +92,7 @@ class Home extends CI_Controller {
 	}
 
 	function excel() {
-		$data = $this->model_home->get_data_pdf();
+		$data = $this->model_home->display_data();
 		$file = 'laporan.xlsx';
 
 		$spreadsheet = new Spreadsheet();
@@ -206,7 +197,7 @@ class Home extends CI_Controller {
 	// }
 
 	function pdf() {
-		$data = $this->model_home->get_data_pdf();
+		$data = $this->model_home->display_data();
 
 		$mpdf = new Mpdf();
 		$table = '';
