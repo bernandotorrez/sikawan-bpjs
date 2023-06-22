@@ -12,6 +12,11 @@ class Home extends CI_Controller {
 
 	function __construct(){
 		parent::__construct();
+		
+		if (!$this->session->userdata('id_user')) {
+			redirect(base_url('login')); // Replace 'login' with your login page URL
+		}		
+
 		$this->load->model('model_home');
 		$this->load->library('fpdf_gen');
 	}
