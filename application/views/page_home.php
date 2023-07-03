@@ -45,7 +45,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 					<?php if ($this->session->userdata('id_user')) { ?>
 						<li><a>Hai, <?= $this->session->userdata('username'); ?></a></li>
 						<?php if ($this->session->userdata('level') == 'Admin') { ?>
-							<li><a href="<?php echo site_url('master'); ?>">Data Master</a></li>
+							<!-- <li><a href="<?php echo site_url('master'); ?>">Data Master</a></li> -->
 						<?php } ?>
 						<li class="dropdown">
 							<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Report <span class="caret"></span></a>
