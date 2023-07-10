@@ -213,11 +213,11 @@ class Home extends CI_Controller {
 			}
 			elseif ($value->jns_bpjs == 1)
 			{
-				$jenis_bpjs = "Hak rawat kelas 1 naik ke kelas di atas 1";
+				$jenis_bpjs = "Hak rawat kelas 1 naik ke kelas di atas 1 (Utama, VIP, VVIP, Suite Room, dll)";
 			}
 			else
 			{
-				$jenis_bpjs = "Hak rawat kelas 2 naik ke kelas di atas 1";
+				$jenis_bpjs = "Hak rawat kelas 2 naik ke kelas di atas 1 (Utama, VIP, VVIP, Suite Room, dll)";
 			}
 			$table .= '
 			<tr>
@@ -242,7 +242,7 @@ class Home extends CI_Controller {
 						<th>No</th>
 						<th>Nomor Pasien</th>
 						<th>Jenis Hak Kelas Rawat Peserta JKN</th>
-						<th>Tarif Riil RS Diatas Kelas 1</th>
+						<th>Tarif Riil RS Diatas Kelas 1 (Utama, VIP, VVIP, Suite Room, dll)</th>
 						<th>Tarif INA_CBG Kelas 1</th>
 						<th>Tarif INA_CBG Kelas 2</th>
 						<th>Selisih Tarif Riil RS dgn Tarif INA_CBG</th>
