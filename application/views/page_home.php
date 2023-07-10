@@ -112,7 +112,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 											</select>
 										</div>
 										<div class="form-group">
-											<label for="value1">Tarif Riil RS Diatas Kelas 1</label>
+											<label for="value1">Tarif Riil RS Diatas Kelas 1 (Utama, VIP, VVIP, Suite Room, dll)</label>
 											<input type="text" name="value1" id="value1" class="form-control hitung" min="0" placeholder="Masukkan Nilai" onkeypress="return onlyNumberKey(event)" onkeyup="return numberWithCommas(this)" required />
 										</div>
 										<div class="form-group">
@@ -176,7 +176,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 						<td class="text-center"><b>No</b></td>
 						<td class="text-center"><b>Nomor Pasien</b></td>
 						<td class="text-center"><b>Jenis Hak Kelas Rawat Peserta JKN</b></td>
-						<td class="text-center"><b>Tarif Riil RS Diatas Kelas 1</b></td>
+						<td class="text-center"><b>Tarif Riil RS Diatas Kelas 1 (Utama, VIP, VVIP, Suite Room, dll)</b></td>
 						<td class="text-center"><b>Tarif INA_CBG Kelas 1</b></td>
 						<td class="text-center"><b>Tarif INA_CBG Kelas 2</b></td>
 						<td class="text-center"><b>Selisih Tarif Riil RS dgn Tarif INA_CBG</b></td>
@@ -201,9 +201,9 @@ defined('BASEPATH') or exit('No direct script access allowed');
 								if ($r->jns_bpjs == 1) {
 									echo "Hak rawat kelas 2 naik ke kelas 1";
 								} elseif ($r->jns_bpjs == 2) {
-									echo "Hak rawat kelas 1 naik ke kelas di atas 1";
+									echo "Hak rawat kelas 1 naik ke kelas di atas 1 (Utama, VIP, VVIP, Suite Room, dll)";
 								} else {
-									echo "Hak rawat kelas 2 naik ke kelas di atas 1";
+									echo "Hak rawat kelas 2 naik ke kelas di atas 1 (Utama, VIP, VVIP, Suite Room, dll)";
 								}
 								?>
 							</td>
