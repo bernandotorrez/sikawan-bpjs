@@ -117,7 +117,7 @@ class Home extends CI_Controller {
 		$sheet->setCellValue('A1', 'No');
 		$sheet->setCellValue('B1', 'Nomor Pasien');
 		$sheet->setCellValue('C1', 'Jenis Hak Kelas Rawat Peserta JKN');
-		$sheet->setCellValue('D1', 'Tarif Riil RS Diatas Kelas 1');
+		$sheet->setCellValue('D1', 'Tarif Riil RS Diatas Kelas 1 (Utama, VIP, VVIP, Suite Room, dll)');
 		$sheet->setCellValue('E1', 'Tarif INA_CBG Kelas 1');
 		$sheet->setCellValue('F1', 'Tarif INA_CBG Kelas 2');
 		$sheet->setCellValue('G1', 'Selisih Tarif Riil RS dgn Tarif INA_CBG');
@@ -135,11 +135,11 @@ class Home extends CI_Controller {
 			}
 			elseif ($value->jns_bpjs == 1)
 			{
-				$jenis_bpjs = "Hak rawat kelas 1 naik ke kelas di atas 1";
+				$jenis_bpjs = "Hak rawat kelas 1 naik ke kelas di atas 1 (Utama, VIP, VVIP, Suite Room, dll)";
 			}
 			else
 			{
-				$jenis_bpjs = "Hak rawat kelas 2 naik ke kelas di atas 1";
+				$jenis_bpjs = "Hak rawat kelas 2 naik ke kelas di atas 1 (Utama, VIP, VVIP, Suite Room, dll)";
 			}
 
 			$sheet->setCellValue('A'.$noCell, $key+1);
