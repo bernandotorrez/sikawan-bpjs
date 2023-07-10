@@ -107,8 +107,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
 											<select class="form-control" id="txtjnsbpjs" name="txtjnsbpjs" required="required">
 												<option value="" selected>Pilih Jenis Hak Kelas Rawat Peserta JKN</option>
 												<option value="1">Hak rawat kelas 2 naik ke kelas 1</option>
-												<option value="2">Hak rawat kelas 1 naik ke kelas di atas 1</option>
-												<option value="3">Hak rawat kelas 2 naik ke kelas di atas 1</option>
+												<option value="2">Hak rawat kelas 1 naik ke kelas di atas 1 (Utama, VIP, VVIP, Suite Room, dll)</option>
+												<option value="3">Hak rawat kelas 2 naik ke kelas di atas 1 (Utama, VIP, VVIP, Suite Room, dll)</option>
 											</select>
 										</div>
 										<div class="form-group">
